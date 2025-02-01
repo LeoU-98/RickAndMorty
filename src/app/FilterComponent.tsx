@@ -9,7 +9,7 @@ type FilterComponentProps = {
 
 function FilterComponent({ filterData, filterBy }: FilterComponentProps) {
   return (
-    <div className="py-4 pl-4">
+    <div className="bg-black py-4 pl-4">
       <p>Filter By : {filterBy}</p>
       <ul className="mt-2 flex flex-col gap-2 pl-4">
         {filterData.map((property, index) => (
