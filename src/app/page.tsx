@@ -15,16 +15,16 @@ export default async function Home() {
   console.log(data);
 
   return (
-    <div className="container mx-auto mt-2 flex overflow-hidden rounded-lg border-2 border-white">
+    <div className="container mx-auto mt-2 flex overflow-hidden rounded-lg border-2 border-white bg-black/70">
       <div className="basis-1/5 border-r-2 border-r-white">
         <FilterComponent
           filterBy="characters"
           filterData={characterFilterData}
         />
       </div>
-      <div className="basis-4/5 bg-blue-600">
+      <div className="basis-4/5">
         <Search />
-        <div className="bg-gray-800 p-4">
+        <div className="p-4">
           <SearchResults data={data} />
         </div>
       </div>
