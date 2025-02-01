@@ -26,5 +26,5 @@ export type PageData = {
     prev: string;
   };
 
-  result: Character;
+  results: Character[];
 };
