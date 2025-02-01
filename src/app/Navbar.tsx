@@ -2,7 +2,7 @@ import Link from "next/link";
 
 function Navbar() {
   return (
-    <nav className="container mx-auto mt-1 flex items-center justify-between rounded-md bg-black/50 px-8 py-8">
+    <nav className="container mx-auto mt-1 flex items-center justify-between rounded-md bg-black/50 px-8 py-2">
       <div className="basis-1/3">Logo</div>
       <ul className="flex basis-1/3 items-center justify-center gap-4">
         <li>
