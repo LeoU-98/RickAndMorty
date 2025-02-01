@@ -5,8 +5,8 @@ import {
   locationFilterData,
 } from "../../Constants/data";
 
-import Card from "./Card";
 import Search from "./Search";
+import SearchResults from "./SearchResults";
 
 export default async function Home() {
   const res = await fetch("https://rickandmortyapi.com/api/character/");
@@ -25,11 +25,7 @@ export default async function Home() {
       <div className="basis-4/5 bg-blue-600">
         <Search />
         <div className="bg-gray-800 p-4">
-          <ul className="grid grid-cols-2 gap-4">
-            {data.results.map((item) => (
-              <Card data={item} key={item.id} />
-            ))}
-          </ul>
+          <SearchResults data={data} />
         </div>
       </div>
     </div>
