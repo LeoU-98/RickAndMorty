@@ -1,4 +1,4 @@
-"use client"; // Ensures this runs on the client side
+"use client";
 
 import { useState } from "react";
 import { PageData } from "./allTypes";
@@ -18,13 +18,13 @@ const SearchResults: React.FC<SearchResultsProps> = ({ data }) => {
   const totalPages = Math.ceil(data?.results?.length / itemsPerPage);
 
   return (
-    <>
+    <div className="p-4">
       <ul className="grid grid-cols-2 gap-4">
         {currentItems?.map((item) => <Card data={item} key={item.id} />)}
       </ul>
 
       {/* Pagination Controls */}
-      <div className="mt-6 flex space-x-4">
+      <div className="space-x-4">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
@@ -55,7 +55,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ data }) => {
           Next
         </button>
       </div>
-    </>
+    </div>
   );
 };
 
