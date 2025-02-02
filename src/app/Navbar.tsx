@@ -9,7 +9,7 @@ function Navbar() {
           <Link
             prefetch={false}
             href={"/"}
-            className="rounded-full bg-green-500 px-4 py-2 text-white"
+            className="rounded-full bg-black px-4 py-2 text-white duration-300 hover:bg-white hover:text-black"
           >
             Home
           </Link>
@@ -18,7 +18,7 @@ function Navbar() {
           <Link
             prefetch={false}
             href={"Characters"}
-            className="rounded-full bg-green-500 px-4 py-2 text-white"
+            className="rounded-full bg-black px-4 py-2 text-white duration-300 hover:bg-white hover:text-black"
           >
             Characters
           </Link>
@@ -27,7 +27,7 @@ function Navbar() {
           <Link
             prefetch={false}
             href={"Locations"}
-            className="rounded-full bg-green-500 px-4 py-2 text-white"
+            className="rounded-full bg-black px-4 py-2 text-white duration-300 hover:bg-white hover:text-black"
           >
             Locations
           </Link>
@@ -36,7 +36,7 @@ function Navbar() {
           <Link
             prefetch={false}
             href={"Episodes"}
-            className="rounded-full bg-green-500 px-4 py-2 text-white"
+            className="rounded-full bg-black px-4 py-2 text-white duration-300 hover:bg-white hover:text-black"
           >
             Episodes
           </Link>
