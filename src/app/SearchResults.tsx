@@ -18,8 +18,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({ data }) => {
   const totalPages = Math.ceil(data?.results?.length / itemsPerPage);
 
   return (
-    <div className="p-4">
-      <ul className="grid grid-cols-2 gap-4">
+    <div className="flex flex-col gap-4 p-5">
+      <ul className="grid min-h-[572px] grid-cols-2 gap-4">
         {currentItems?.map((item) => <Card data={item} key={item.id} />)}
       </ul>
 
@@ -30,16 +30,14 @@ const SearchResults: React.FC<SearchResultsProps> = ({ data }) => {
           disabled={currentPage === 1}
           className={`rounded px-4 py-2 ${
             currentPage === 1
-              ? "cursor-not-allowed bg-gray-400"
-              : "bg-blue-500 text-white hover:bg-blue-600"
+              ? "cursor-not-allowed bg-gray-600"
+              : "bg-black text-white hover:bg-white hover:text-black"
           }`}
         >
           Previous
         </button>
 
-        <span className="rounded bg-gray-300 px-4 py-2">
-          Page {currentPage}
-        </span>
+        <span className="rounded bg-black px-4 py-2">Page {currentPage}</span>
 
         <button
           onClick={() =>
@@ -48,8 +46,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({ data }) => {
           disabled={currentPage >= totalPages}
           className={`rounded px-4 py-2 ${
             currentPage >= totalPages
-              ? "cursor-not-allowed bg-gray-400"
-              : "bg-blue-500 text-white hover:bg-blue-600"
+              ? "cursor-not-allowed bg-gray-600"
+              : "bg-black text-white hover:bg-white hover:text-black"
           }`}
         >
           Next
