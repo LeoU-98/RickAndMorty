@@ -42,6 +42,7 @@ function Navbar() {
           </Link>
         </li>
       </ul>
+
       <div className="flex basis-1/3 flex-col items-end">
         <div>
           <p>Your Name : LeoU </p>
