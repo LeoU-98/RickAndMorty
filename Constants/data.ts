@@ -19,11 +19,19 @@ export const filterData: FilterCategory = {
     },
   ],
   location: [
-    { name: "type", options: ["Plant", "Space Station", "Unknown"], value: "" },
+    {
+      name: "type",
+      options: ["Planet", "Space Station", "Unknown"],
+      value: "",
+    },
     { name: "dimension", options: ["Dimension C-137", "Unknown"], value: "" },
   ],
   episode: [
-    { name: "type", options: ["Plant", "Space Station", "Unknown"], value: "" },
+    {
+      name: "type",
+      options: ["Planet", "Space Station", "Unknown"],
+      value: "",
+    },
     { name: "dimension", options: ["Dimension C-137", "Unknown"], value: "" },
   ],
 };

@@ -15,7 +15,10 @@ function FilterComponent() {
           <h2 className="mb-2 font-semibold capitalize">{filter.name}</h2>
           <div className="space-y-2">
             {filter.options?.map((option) => (
-              <label key={option} className="flex items-center space-x-2">
+              <label
+                key={option}
+                className="flex w-fit cursor-pointer select-none items-center space-x-2"
+              >
                 <input
                   type="radio"
                   name={filter.name}

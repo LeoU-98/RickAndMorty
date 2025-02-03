@@ -15,7 +15,29 @@ export type Character = {
   };
   image: string;
 
+  url: string;
   episode: string[];
+  created: string;
+};
+
+export type Location = {
+  id: number;
+  name: string;
+  type: string;
+  dimension: string;
+  residents: string[];
+  url: string;
+  created: string;
+};
+
+export type Episode = {
+  id: number;
+  name: string;
+  air_date: string;
+  episode: string;
+  characters: string[];
+  url: string;
+  created: string;
 };
 
 export type PageData = {
@@ -26,5 +48,5 @@ export type PageData = {
     prev: string | null;
   };
 
-  results: Character[];
+  results: Character[] | Location[] | Episode[];
 };
