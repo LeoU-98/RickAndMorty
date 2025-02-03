@@ -6,8 +6,6 @@ type CardProps = {
 };
 
 function Card({ data }: CardProps) {
-  console.log(data);
-
   return (
     <li>
       <figure className="flex items-center gap-3 overflow-hidden rounded-lg bg-black">

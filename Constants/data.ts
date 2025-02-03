@@ -1,49 +1,15 @@
-// export const characterFilterData = [
-//   {
-//     name: "status",
-//     options: ["Alive", "Dead", "Unknown"],
-//     value: null,
-//   },
-//   {
-//     name: "speices",
-//     options: ["Human", "Alien"],
-//     value: null,
-//   },
-//   {
-//     name: "gender",
-//     options: ["Female", "Male", "Genderless", "Unknown"],
-//     value: null,
-//   },
-// ];
+interface FilterOption {
+  name: string;
+  options: string[];
+  value: string;
+}
 
-// export const locationFilterData = [
-//   {
-//     name: "type",
-//     options: ["Plant", "Space Station", "unknown"],
-//     value: null,
-//   },
-//   {
-//     name: "dimension",
-//     options: ["Dimension C-137", "unknown"],
-//     value: null,
-//   },
-// ];
+interface FilterCategory {
+  [key: string]: FilterOption[];
+}
 
-// export const episodeFilterData = [
-//   {
-//     name: "type",
-//     options: ["Plant", "Space Station", "unknown"],
-//     value: null,
-//   },
-//   {
-//     name: "dimension",
-//     options: ["Dimension C-137", "unknown"],
-//     value: null,
-//   },
-// ];
-
-export const filterData = {
-  characters: [
+export const filterData: FilterCategory = {
+  character: [
     { name: "status", options: ["Alive", "Dead", "Unknown"], value: "" },
     { name: "species", options: ["Human", "Alien"], value: "" },
     {
@@ -52,11 +18,11 @@ export const filterData = {
       value: "",
     },
   ],
-  locations: [
+  location: [
     { name: "type", options: ["Plant", "Space Station", "Unknown"], value: "" },
     { name: "dimension", options: ["Dimension C-137", "Unknown"], value: "" },
   ],
-  episodes: [
+  episode: [
     { name: "type", options: ["Plant", "Space Station", "Unknown"], value: "" },
     { name: "dimension", options: ["Dimension C-137", "Unknown"], value: "" },
   ],
