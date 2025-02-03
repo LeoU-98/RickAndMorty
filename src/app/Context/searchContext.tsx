@@ -14,7 +14,10 @@ import { PageData } from "../allTypes";
 
 type Category = "character" | "location" | "episode";
 interface Value {
+  currentPageNumber?: number;
+  LastPageNumber?: number;
   resultsFound?: number;
+  setCurrentPageNumber: Dispatch<SetStateAction<number>>;
   category: Category;
   searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
@@ -28,9 +31,12 @@ interface Value {
 }
 
 const searchContext = createContext<Value>({
+  LastPageNumber: undefined,
   resultsFound: undefined,
+  currentPageNumber: undefined,
   category: "character",
   searchText: "",
+  setCurrentPageNumber: () => {},
   setSearchText: () => {},
   handleRadioChange: () => {},
   clearFilters: () => {},
@@ -44,6 +50,7 @@ const searchContext = createContext<Value>({
 function SearchProvider({ children }: { children: React.ReactNode }) {
   const { category }: { category: Category } = useParams();
   const [searchText, setSearchText] = useState("");
+  const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [selectedFilters, setSelectedFilters] = useState<
     Record<string, string>
   >(
@@ -66,12 +73,26 @@ function SearchProvider({ children }: { children: React.ReactNode }) {
     .join("&");
 
   let url = "";
-  if (!searchText && !filterQueryString) url = "";
-  if (!searchText && filterQueryString) url = `?${filterQueryString}`;
-  if (searchText && !filterQueryString) url = `?name=${searchText}`;
+  if (!searchText && !filterQueryString)
+    url = "" + `?page=${currentPageNumber}`;
+  if (!searchText && filterQueryString)
+    url = `?${filterQueryString}&page=${currentPageNumber}`;
+  if (searchText && !filterQueryString)
+    url = `?name=${searchText}&page=${currentPageNumber}`;
   if (searchText && filterQueryString)
-    url = `?name=${searchText}&${filterQueryString}`;
+    url = `?name=${searchText}&${filterQueryString}&page=${currentPageNumber}`;
 
+  // url = url + `&page=${currenPageNumber}`;
+  // console.log(url);
+
+  // let url = "";
+  // if (!searchText && !filterQueryString) url = ""
+  // if (!searchText && filterQueryString) url = `?${filterQueryString}`;
+  // if (searchText && !filterQueryString) url = `?name=${searchText}`;
+  // if (searchText && filterQueryString)
+  //   url = `?name=${searchText}&${filterQueryString}`;
+
+  ////////////////////////
   // Handle radio button change
   function handleRadioChange(filterName: string, value: string) {
     setSelectedFilters((prev) => ({
@@ -99,8 +120,12 @@ function SearchProvider({ children }: { children: React.ReactNode }) {
   });
 
   const resultsFound = data?.info?.count;
+  const LastPageNumber = data?.info?.pages;
 
   const value = {
+    currentPageNumber,
+    setCurrentPageNumber,
+    LastPageNumber,
     resultsFound,
     category,
     searchText,

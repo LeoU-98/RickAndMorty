@@ -17,7 +17,7 @@ export default Card;
 function CharacterCard({ data }: { data: Character }) {
   return (
     <li>
-      <figure className="flex items-center gap-3 overflow-hidden rounded-lg bg-black">
+      <figure className="flex h-[180px] items-center gap-3 overflow-hidden rounded-lg bg-black">
         <Image
           src={data?.image}
           className="select-none"
