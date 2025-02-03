@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { PageData } from "./allTypes";
 import Card from "./Card";
 import { useSearch } from "./Context/searchContext";
 
 function SearchResults() {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { data, isLoading, error }: { data: PageData } = useSearch();
+  const { data, isLoading, error, category } = useSearch();
 
   if (isLoading) return <div>Loading ....</div>;
   if (error) return <div>error ....</div>;
@@ -17,12 +16,18 @@ function SearchResults() {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data?.results?.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(data?.results?.length / itemsPerPage);
+
+  let totalPages = 0;
+  if (data?.results?.length) {
+    totalPages = Math.ceil(data?.results?.length / itemsPerPage);
+  }
 
   return (
     <div className="flex flex-col gap-4 p-5">
       <ul className="grid min-h-[572px] grid-cols-2 gap-4">
-        {currentItems?.map((item) => <Card data={item} key={item.id} />)}
+        {currentItems?.map((item) => (
+          <Card data={item} type={category} key={item.id} />
+        ))}
       </ul>
 
       {/* Pagination Controls */}

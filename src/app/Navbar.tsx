@@ -17,7 +17,7 @@ function Navbar() {
         <li>
           <Link
             prefetch={false}
-            href={"character"}
+            href={"/Home/character"}
             className="rounded-full bg-black px-4 py-2 text-white duration-300 hover:bg-white hover:text-black"
           >
             Characters
@@ -26,7 +26,7 @@ function Navbar() {
         <li>
           <Link
             prefetch={false}
-            href={"location"}
+            href={"/Home/location"}
             className="rounded-full bg-black px-4 py-2 text-white duration-300 hover:bg-white hover:text-black"
           >
             Locations
@@ -35,7 +35,7 @@ function Navbar() {
         <li>
           <Link
             prefetch={false}
-            href={"episode"}
+            href={"/Home/episode"}
             className="rounded-full bg-black px-4 py-2 text-white duration-300 hover:bg-white hover:text-black"
           >
             Episodes

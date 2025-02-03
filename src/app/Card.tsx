@@ -1,15 +1,30 @@
 import Image from "next/image";
-import { Character } from "./allTypes";
+import { Character, Episode, Location } from "./allTypes";
 
 type CardProps = {
-  data: Character;
+  data: Character | Location | Episode;
+  type?: "character" | "location" | "episode";
 };
 
-function Card({ data }: CardProps) {
+function Card({ data, type }: CardProps) {
+  if (type === "character") return <CharacterCard data={data as Character} />;
+  if (type === "location") return <LocationCard data={data as Location} />;
+  if (type === "episode") return <EpisodeCard data={data as Episode} />;
+}
+
+export default Card;
+
+function CharacterCard({ data }: { data: Character }) {
   return (
     <li>
       <figure className="flex items-center gap-3 overflow-hidden rounded-lg bg-black">
-        <Image src={data?.image} width={180} height={180} alt={data?.name} />
+        <Image
+          src={data?.image}
+          className="select-none"
+          width={180}
+          height={180}
+          alt={data?.name}
+        />
 
         <div className="">
           <p className="text-3xl text-white">{data?.name}</p>
@@ -30,4 +45,53 @@ function Card({ data }: CardProps) {
   );
 }
 
-export default Card;
+function LocationCard({ data }: { data: Location }) {
+  return (
+    <li>
+      <div className="flex h-[180px] items-center gap-3 overflow-hidden rounded-lg bg-black p-4">
+        <div className="flex basis-2/3 flex-col gap-4">
+          <p className="text-3xl text-white">{data?.name}</p>
+          <p className="mb-1 text-sm text-white">
+            <span className="text-lg text-yellow-500">Type : </span>{" "}
+            {data?.type}
+          </p>
+          <p className="text-sm text-white">
+            <span className="text-lg text-yellow-500">Dimension : </span>{" "}
+            {data?.dimension}
+          </p>
+        </div>
+        <div className="flex basis-1/3 items-center justify-center">
+          <button className="rounded-full bg-white px-7 py-2 text-black">
+            Residents
+          </button>
+        </div>
+        {/* <p className="mb-2 text-yellow-500">residents{data?.residents?.map(())}</p> */}
+      </div>
+    </li>
+  );
+}
+
+function EpisodeCard({ data }: { data: Episode }) {
+  return (
+    <li>
+      <div className="flex h-[180px] items-center gap-3 overflow-hidden rounded-lg bg-black p-4">
+        <div className="flex basis-2/3 flex-col gap-4">
+          <p className="text-3xl text-white">{data?.name}</p>
+          <p className="mb-1 text-sm text-white">
+            <span className="text-lg text-yellow-500">Air Date : </span>{" "}
+            {data?.air_date}
+          </p>
+          <p className="text-sm text-white">
+            <span className="text-lg text-yellow-500">Epi Code : </span>{" "}
+            {data?.episode}
+          </p>
+        </div>
+        <div className="flex basis-1/3 items-center justify-center">
+          <button className="rounded-full bg-white px-7 py-2 text-black">
+            Characters
+          </button>
+        </div>
+      </div>
+    </li>
+  );
+}

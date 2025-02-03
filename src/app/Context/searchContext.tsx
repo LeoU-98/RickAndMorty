@@ -10,19 +10,36 @@ import {
 import { useParams } from "next/navigation";
 import { filterData } from "../../../Constants/data";
 import { fetchData } from "../_utils/fetchData";
+import { PageData } from "../allTypes";
 
 type Category = "character" | "location" | "episode";
 interface Value {
+  resultsFound?: number;
+  category: Category;
   searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
-  handleRadioChange: () => void;
-  applyFilters: () => void;
+  handleRadioChange: (filterName: string, value: string) => void;
   clearFilters: () => void;
+  selectedFilters: Record<string, string>;
+  setSelectedFilters: Dispatch<SetStateAction<Record<string, string>>>;
+  data?: PageData;
   isLoading: boolean;
-  //   error: string;
+  error: unknown;
 }
 
-const searchContext = createContext<Value | null>(null);
+const searchContext = createContext<Value>({
+  resultsFound: undefined,
+  category: "character",
+  searchText: "",
+  setSearchText: () => {},
+  handleRadioChange: () => {},
+  clearFilters: () => {},
+  selectedFilters: {},
+  setSelectedFilters: () => {},
+  data: undefined,
+  isLoading: false,
+  error: null,
+});
 
 function SearchProvider({ children }: { children: React.ReactNode }) {
   const { category }: { category: Category } = useParams();
@@ -48,7 +65,7 @@ function SearchProvider({ children }: { children: React.ReactNode }) {
     )
     .join("&");
 
-  let url: string;
+  let url = "";
   if (!searchText && !filterQueryString) url = "";
   if (!searchText && filterQueryString) url = `?${filterQueryString}`;
   if (searchText && !filterQueryString) url = `?name=${searchText}`;
@@ -81,7 +98,10 @@ function SearchProvider({ children }: { children: React.ReactNode }) {
     queryFn: () => fetchData(url, category), // query function
   });
 
+  const resultsFound = data?.info?.count;
+
   const value = {
+    resultsFound,
     category,
     searchText,
     setSearchText,
