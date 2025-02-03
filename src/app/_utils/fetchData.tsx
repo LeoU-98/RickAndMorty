@@ -4,7 +4,7 @@ export async function fetchData(
 ) {
   const url = `https://rickandmortyapi.com/api/${queryPage}/${queryText}`;
 
-  if (queryText.length < 3) return;
+  console.log(url);
 
   try {
     const response = await fetch(url);
@@ -14,6 +14,7 @@ export async function fetchData(
     }
 
     const data = await response.json();
+
     return data;
   } catch (error: unknown) {
     if (error instanceof Error) {
