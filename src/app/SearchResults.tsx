@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { PageData } from "./allTypes";
 import Card from "./Card";
+import { useSearch } from "./Context/searchContext";
 
-interface SearchResultsProps {
-  data: PageData;
-}
+function SearchResults() {
+  const { data }: { data: PageData } = useSearch();
 
-const SearchResults: React.FC<SearchResultsProps> = ({ data }) => {
+  console.log(data);
+
   const [currentPage, setCurrentPage] = useState<number>(1);
   // Calculate paginated data
   const itemsPerPage = 6;
@@ -55,6 +56,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({ data }) => {
       </div>
     </div>
   );
-};
+}
 
 export default SearchResults;
