@@ -9,9 +9,9 @@ import {
 } from "react";
 import { useParams } from "next/navigation";
 import { filterData } from "../../../Constants/data";
-import { useRouter } from "next/navigation";
 import { fetchData } from "../_utils/fetchData";
 
+type Category = "character" | "location" | "episode";
 interface Value {
   searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
@@ -22,17 +22,11 @@ interface Value {
   //   error: string;
 }
 
-type Category = "character" | "location" | "episode";
 const searchContext = createContext<Value | null>(null);
 
-const SearchProvider = ({ children }: { children: React.ReactNode }) => {
-  const [searchText, setSearchText] = useState("Hello from Context");
+function SearchProvider({ children }: { children: React.ReactNode }) {
   const { category }: { category: Category } = useParams();
-  const router = useRouter();
-
-  const searchParams = "?name=rick";
-
-  // Initialize state for selected filters
+  const [searchText, setSearchText] = useState("");
   const [selectedFilters, setSelectedFilters] = useState<
     Record<string, string>
   >(
@@ -45,32 +39,32 @@ const SearchProvider = ({ children }: { children: React.ReactNode }) => {
     ),
   );
 
+  //Form Filter Query String
+  const filterQueryString = Object.entries(selectedFilters)
+    .filter(([_, value]) => value) // Remove empty selections
+    .map(
+      ([key, value]) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+    )
+    .join("&");
+
+  let url: string;
+  if (!searchText && !filterQueryString) url = "";
+  if (!searchText && filterQueryString) url = `?${filterQueryString}`;
+  if (searchText && !filterQueryString) url = `?name=${searchText}`;
+  if (searchText && filterQueryString)
+    url = `?name=${searchText}&${filterQueryString}`;
+
   // Handle radio button change
-  const handleRadioChange = (filterName: string, value: string) => {
+  function handleRadioChange(filterName: string, value: string) {
     setSelectedFilters((prev) => ({
       ...prev,
       [filterName]: value,
     }));
-  };
-
-  // Apply filters and update query params
-  const applyFilters = () => {
-    const queryString = Object.entries(selectedFilters)
-      .filter(([_, value]) => value) // Remove empty selections
-      .map(
-        ([key, value]) =>
-          `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
-      )
-      .join("&");
-
-    const url = queryString
-      ? `/items/${category}?${queryString}`
-      : `/items/${category}`;
-    router.push(url);
-  };
+  }
 
   // **Reset filters**
-  const clearFilters = () => {
+  function clearFilters() {
     setSelectedFilters(
       filterData[category].reduce(
         (acc, filter) => {
@@ -80,25 +74,18 @@ const SearchProvider = ({ children }: { children: React.ReactNode }) => {
         {} as Record<string, string>,
       ),
     );
-
-    router.push(`/items/${category}`); // Reset URL to remove query params
-  };
-
-  ////////////////////////////////////////////////////////////
+  }
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["fetchData", searchParams, category], // query key
-    queryFn: () => fetchData(searchParams, category), // query function
+    queryKey: ["fetchData", url, category], // query key
+    queryFn: () => fetchData(url, category), // query function
   });
-
-  ///////////////////////////////////////////////////////////////////////////////
 
   const value = {
     category,
     searchText,
     setSearchText,
     handleRadioChange,
-    applyFilters,
     clearFilters,
     selectedFilters,
     setSelectedFilters,
@@ -110,7 +97,7 @@ const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <searchContext.Provider value={value}>{children}</searchContext.Provider>
   );
-};
+}
 
 function useSearch() {
   const context = useContext(searchContext);

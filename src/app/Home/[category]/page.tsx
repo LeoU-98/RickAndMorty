@@ -3,14 +3,9 @@
 import { SearchProvider } from "@/app/Context/searchContext";
 import Search from "../../Search";
 import SearchResults from "../../SearchResults";
-import { useParams } from "next/navigation";
 import FilterComponent from "@/app/FilterComponent";
 
-export default function CharactersPage() {
-  const { searchFor } = useParams();
-
-  console.log(searchFor);
-
+export default function Page() {
   return (
     <SearchProvider>
       <div className="container mx-auto mt-2 flex h-[740px] overflow-hidden rounded-lg border-2 border-white bg-black/70">

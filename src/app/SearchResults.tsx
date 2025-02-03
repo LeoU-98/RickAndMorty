@@ -6,11 +6,12 @@ import Card from "./Card";
 import { useSearch } from "./Context/searchContext";
 
 function SearchResults() {
-  const { data }: { data: PageData } = useSearch();
-
-  console.log(data);
-
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const { data, isLoading, error }: { data: PageData } = useSearch();
+
+  if (isLoading) return <div>Loading ....</div>;
+  if (error) return <div>error ....</div>;
+
   // Calculate paginated data
   const itemsPerPage = 6;
   const indexOfLastItem = currentPage * itemsPerPage;
