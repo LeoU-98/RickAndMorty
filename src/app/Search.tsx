@@ -29,7 +29,7 @@ function Search() {
     data,
   } = useSearch();
 
-  function handleOnSearchText(e) {
+  function handleOnSearchText(e: React.ChangeEvent<HTMLInputElement>) {
     setCurrentPage(1);
     setSearchText(e.target.value);
   }

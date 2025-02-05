@@ -8,7 +8,7 @@ import FilterComponent from "@/app/FilterComponent";
 export default function Page() {
   return (
     <SearchProvider>
-      <div className="container mx-auto mt-2 flex h-[740px] overflow-hidden rounded-lg border-2 border-white bg-black/70">
+      <div className="container mx-auto mt-5 flex h-[740px] overflow-hidden rounded-lg border-2 border-white bg-black/70">
         <div className="basis-1/6 border-r-2 border-r-white">
           <FilterComponent />
         </div>

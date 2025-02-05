@@ -81,16 +81,6 @@ function SearchProvider({ children }: { children: React.ReactNode }) {
   if (searchText && filterQueryString)
     url = `?name=${searchText}&${filterQueryString}&page=${currentPage}`;
 
-  // url = url + `&page=${currenPageNumber}`;
-  // console.log(url);
-
-  // let url = "";
-  // if (!searchText && !filterQueryString) url = ""
-  // if (!searchText && filterQueryString) url = `?${filterQueryString}`;
-  // if (searchText && !filterQueryString) url = `?name=${searchText}`;
-  // if (searchText && filterQueryString)
-  //   url = `?name=${searchText}&${filterQueryString}`;
-
   ////////////////////////
   // Handle radio button change
   function handleRadioChange(filterName: string, value: string) {
