@@ -3,6 +3,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import Card from "./Card";
 import { useSearch } from "./Context/searchContext";
+import { PiArrowCircleLeftFill, PiArrowCircleRightFill } from "react-icons/pi";
 
 function SearchResults() {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -35,29 +36,29 @@ function SearchResults() {
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className={`rounded px-4 py-2 ${
+            className={`rounded-lg px-2 py-1 ${
               currentPage === 1
                 ? "cursor-not-allowed bg-gray-600"
                 : "bg-black text-white hover:bg-white hover:text-black"
             }`}
           >
-            Previous
+            <PiArrowCircleLeftFill className="size-10" />
           </button>
 
-          <span className="rounded bg-black px-4 py-2">Page {currentPage}</span>
+          {/* <span className=" bg-black px-4 py-2">Page {currentPage}</span> */}
 
           <button
             onClick={() =>
               setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev))
             }
             disabled={currentPage >= totalPages}
-            className={`rounded px-4 py-2 ${
+            className={`rounded-lg px-2 py-1 ${
               currentPage >= totalPages
                 ? "cursor-not-allowed bg-gray-600"
                 : "bg-black text-white hover:bg-white hover:text-black"
             }`}
           >
-            Next
+            <PiArrowCircleRightFill className="size-10" />
           </button>
         </div>
         <ServerSidePagination setCurrentPage={setCurrentPage} />
