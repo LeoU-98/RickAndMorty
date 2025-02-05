@@ -27,9 +27,9 @@ function CharacterCard({ data }: { data: Character }) {
       <div className="flex flex-col">
         <p className="text-3xl text-white">{data?.name}</p>
         <p className="mb-1 flex items-center gap-1 text-sm text-white">
-          <div
+          <span
             className={`size-2 animate-pulse rounded-full duration-150 ${data?.status.toLowerCase() === "alive" && "bg-green-500"} ${data?.status.toLowerCase() === "dead" && "bg-red-500"} ${data?.status.toLowerCase() === "unknown" && "bg-gray-500"} `}
-          ></div>
+          ></span>
           {data?.status}-{data?.species}
         </p>
 

@@ -45,7 +45,10 @@ function Navbar() {
       animate="visible"
       className="container mx-auto mt-1 flex items-center justify-between rounded-md bg-gradient-to-r from-slate-800/80 to-slate-600/80 px-8 py-2"
     >
-      <div className="flex basis-1/3 items-center justify-start gap-2">
+      <Link
+        href={"/"}
+        className="flex basis-1/3 items-center justify-start gap-2"
+      >
         <svg
           id="Layer_2"
           data-name="Layer 2"
@@ -58,7 +61,7 @@ function Navbar() {
           </g>
         </svg>
         <span className="text-xl">Rick & Morty</span>
-      </div>
+      </Link>
       <ul className="flex basis-1/3 items-center justify-center gap-4">
         <motion.li
           variants={navIconVariants}
@@ -120,9 +123,14 @@ function Navbar() {
 
       <div className="flex basis-1/3 flex-col items-end">
         <div>
-          <p>Your Name : LeoU </p>
-          <p>Your Current Location : Earth</p>
-          <p>Time Now : 12 pm</p>
+          <p>Author : LeoU </p>
+          <p>Location : Earth</p>
+          <p className="mb-1 flex items-center gap-1 text-white">
+            <span
+              className={`size-2 animate-pulse rounded-full bg-green-500 duration-150`}
+            ></span>
+            Alive-Human
+          </p>
         </div>
       </div>
     </motion.nav>

@@ -1,6 +1,6 @@
 "use client";
 
-import { TbArrowWaveRightUp } from "react-icons/tb";
+import { TbArrowWaveRightDown, TbArrowWaveRightUp } from "react-icons/tb";
 import { useSearch } from "./Context/searchContext";
 import { motion } from "motion/react";
 
@@ -35,7 +35,7 @@ function Search() {
   }
 
   return (
-    <div className="flex items-center justify-between border-b-2 border-b-white px-20 py-3">
+    <div className="flex items-center justify-between border-b-2 border-b-white bg-gradient-to-br from-slate-800/80 to-slate-600/80 px-20 py-3">
       <motion.input
         variants={inputSearchVariants}
         initial="hidden"
@@ -62,7 +62,7 @@ function Search() {
               </span>
             ) : null}
           </p>
-          <TbArrowWaveRightUp className="size-8" />
+          <TbArrowWaveRightDown className="size-8" />
           <p className="flex gap-1">
             Page
             {currentPage || 1 >= 1 ? (
