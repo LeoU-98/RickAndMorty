@@ -86,7 +86,7 @@ function ServerSidePagination() {
         className={`rounded-lg px-4 py-2 duration-300 ${
           currentPage === 1
             ? "cursor-not-allowed bg-gray-600"
-            : "bg-black text-white hover:bg-white hover:text-black"
+            : "w-[92px] bg-black text-white hover:bg-white hover:text-black"
         }`}
       >
         Previous
@@ -104,7 +104,7 @@ function ServerSidePagination() {
         className={`rounded-lg px-4 py-2 duration-300 ${
           currentPage! >= LastPageNumber!
             ? "cursor-not-allowed bg-gray-600"
-            : "bg-black text-white hover:bg-white hover:text-black"
+            : "w-[92px] bg-black text-white hover:bg-white hover:text-black"
         }`}
       >
         Next
