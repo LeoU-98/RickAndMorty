@@ -14,10 +14,10 @@ import { PageData } from "../allTypes";
 
 type Category = "character" | "location" | "episode";
 interface Value {
-  currentPageNumber?: number;
+  currentPage?: number;
   LastPageNumber?: number;
   resultsFound?: number;
-  setCurrentPageNumber: Dispatch<SetStateAction<number>>;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
   category: Category;
   searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
@@ -33,10 +33,10 @@ interface Value {
 const searchContext = createContext<Value>({
   LastPageNumber: undefined,
   resultsFound: undefined,
-  currentPageNumber: undefined,
+  currentPage: undefined,
   category: "character",
   searchText: "",
-  setCurrentPageNumber: () => {},
+  setCurrentPage: () => {},
   setSearchText: () => {},
   handleRadioChange: () => {},
   clearFilters: () => {},
@@ -50,7 +50,7 @@ const searchContext = createContext<Value>({
 function SearchProvider({ children }: { children: React.ReactNode }) {
   const { category }: { category: Category } = useParams();
   const [searchText, setSearchText] = useState("");
-  const [currentPageNumber, setCurrentPageNumber] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedFilters, setSelectedFilters] = useState<
     Record<string, string>
   >(
@@ -73,14 +73,13 @@ function SearchProvider({ children }: { children: React.ReactNode }) {
     .join("&");
 
   let url = "";
-  if (!searchText && !filterQueryString)
-    url = "" + `?page=${currentPageNumber}`;
+  if (!searchText && !filterQueryString) url = "" + `?page=${currentPage}`;
   if (!searchText && filterQueryString)
-    url = `?${filterQueryString}&page=${currentPageNumber}`;
+    url = `?${filterQueryString}&page=${currentPage}`;
   if (searchText && !filterQueryString)
-    url = `?name=${searchText}&page=${currentPageNumber}`;
+    url = `?name=${searchText}&page=${currentPage}`;
   if (searchText && filterQueryString)
-    url = `?name=${searchText}&${filterQueryString}&page=${currentPageNumber}`;
+    url = `?name=${searchText}&${filterQueryString}&page=${currentPage}`;
 
   // url = url + `&page=${currenPageNumber}`;
   // console.log(url);
@@ -115,16 +114,16 @@ function SearchProvider({ children }: { children: React.ReactNode }) {
   }
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["fetchData", url, category], // query key
-    queryFn: () => fetchData(url, category), // query function
+    queryKey: ["fetchData", url, category],
+    queryFn: () => fetchData(url, category),
   });
 
   const resultsFound = data?.info?.count;
   const LastPageNumber = data?.info?.pages;
 
   const value = {
-    currentPageNumber,
-    setCurrentPageNumber,
+    currentPage,
+    setCurrentPage,
     LastPageNumber,
     resultsFound,
     category,

@@ -2,32 +2,49 @@
 
 import { TbArrowWaveRightUp } from "react-icons/tb";
 import { useSearch } from "./Context/searchContext";
+import { motion } from "motion/react";
+
+const inputSearchVariants = {
+  hidden: {
+    scale: 1,
+  },
+  visible: {
+    scale: 1.2,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+    },
+  },
+};
 
 function Search() {
   const {
     searchText,
     setSearchText,
     resultsFound,
-    setCurrentPageNumber,
+    setCurrentPage,
     category,
     LastPageNumber,
-    currentPageNumber,
+    currentPage,
     data,
   } = useSearch();
 
   function handleOnSearchText(e) {
-    setCurrentPageNumber(1);
+    setCurrentPage(1);
     setSearchText(e.target.value);
   }
 
   return (
     <div className="flex items-center justify-between border-b-2 border-b-white px-20 py-3">
-      <input
+      <motion.input
+        variants={inputSearchVariants}
+        initial="hidden"
+        whileFocus="visible"
         type="text"
         placeholder="Search"
         value={searchText}
         onChange={(e) => handleOnSearchText(e)}
-        className="block w-80 rounded-xl px-4 py-2 text-gray-900 outline-none"
+        className="block w-80 rounded-full px-4 py-1 text-gray-900 outline-none"
       />
       {resultsFound ? (
         <div className="flex items-center gap-2">
@@ -48,9 +65,9 @@ function Search() {
           <TbArrowWaveRightUp className="size-8" />
           <p className="flex gap-1">
             Page
-            {currentPageNumber || 1 >= 1 ? (
+            {currentPage || 1 >= 1 ? (
               <span className="capitalize">
-                {currentPageNumber} : {data?.results?.length} {category}
+                {currentPage} : {data?.results?.length} {category}
                 {resultsFound || 0 > 1 ? "s" : ""}
               </span>
             ) : null}

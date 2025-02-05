@@ -9,10 +9,10 @@ export default function Page() {
   return (
     <SearchProvider>
       <div className="container mx-auto mt-2 flex h-[740px] overflow-hidden rounded-lg border-2 border-white bg-black/70">
-        <div className="basis-1/5 border-r-2 border-r-white">
+        <div className="basis-1/6 border-r-2 border-r-white">
           <FilterComponent />
         </div>
-        <div className="basis-4/5">
+        <div className="basis-5/6">
           <Search />
           <SearchResults />
         </div>
