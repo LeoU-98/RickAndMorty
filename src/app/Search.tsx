@@ -68,7 +68,7 @@ function Search() {
             {currentPage || 1 >= 1 ? (
               <span className="capitalize">
                 {currentPage} : {data?.results?.length} {category}
-                {resultsFound || 0 > 1 ? "s" : ""}
+                {resultsFound > 1 ? "s" : ""}
               </span>
             ) : null}
           </p>

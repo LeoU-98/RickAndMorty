@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "./Header";
+import Navbar from "./_Header/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Rick & Morty",
   description:
-    "This Website is a Gallary For Rick & Morty TV Show , Users Will Be Able To Navigate Characters and Episodes and Places in The Show ",
+    "This Website is a Gallery For Rick & Morty TV Show , Users Will Be Able To Navigate Characters and Episodes and Places in The Show ",
   authors: {
     name: "Mohamed Hamdy",
     url: "https://github.com/LeoU-98",
@@ -33,7 +33,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-[] bg-gray-800 bg-[url(/background.jpg)] text-white antialiased`}
       >
-        <Header />
+        <Navbar />
         {children}
       </body>
     </html>

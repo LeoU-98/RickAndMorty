@@ -20,7 +20,7 @@ export default function Home() {
       variants={homePageVariants}
       initial="hidden"
       animate="visible"
-      className="container mx-auto mt-5 flex h-[740px] overflow-hidden rounded-3xl border-2 border-white bg-[] bg-[url(/home-back.png)] bg-cover"
+      className="container mx-auto mt-5 flex h-[740px] overflow-hidden rounded-3xl border-2 border-white bg-[url(/home-back.png)] bg-cover"
     ></motion.div>
   );
 }
