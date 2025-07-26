@@ -1,6 +1,6 @@
 "use client";
-import { filterData } from "../../Constants/data";
-import { useSearch } from "./Context/searchContext";
+import { filterData } from "../../../Constants/data";
+import { useSearch } from "../Context/searchContext";
 import { motion } from "motion/react";
 
 const filterButtonVariants = {
@@ -21,7 +21,7 @@ function FilterComponent() {
     useSearch();
 
   return (
-    <div className="mx-auto h-full max-w-md bg-gradient-to-br from-slate-800/80 to-slate-600/80 p-6">
+    <div className="sticky top-0 mx-auto max-w-md p-6">
       <h2 className="mb-4 text-xl font-bold capitalize">{category} Filters</h2>
 
       {filterData[category]?.map((filter) => (

@@ -4,27 +4,19 @@ export async function fetchData(
 ) {
   const url = `https://rickandmortyapi.com/api/${queryPage}/${queryText}`;
 
-  console.log(url);
-
   try {
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
+      const error = new Error(`Request failed with status ${response.status}`);
+      (error as any).status = response.status;
+      (error as any).url = url;
+      throw error;
     }
 
     const data = await response.json();
-
-    console.log(data);
-
     return data;
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Error fetching data:", error.message);
-      throw error;
-    } else {
-      console.error("Unknown error occurred");
-      throw new Error("Unknown error occurred");
-    }
+    throw error;
   }
 }

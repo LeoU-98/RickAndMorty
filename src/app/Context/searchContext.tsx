@@ -1,20 +1,23 @@
-"use client ";
+"use client";
 import { useQuery } from "@tanstack/react-query";
-import {
+import React, {
   createContext,
   Dispatch,
   SetStateAction,
   useContext,
   useState,
+  useMemo,
+  useEffect,
 } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { filterData } from "../../../Constants/data";
 import { fetchData } from "../_utils/fetchData";
-import { PageData } from "../allTypes";
+import { PageData } from "../app.type.";
 
 type Category = "character" | "location" | "episode";
+
 interface Value {
-  currentPage?: number;
+  currentPage: number;
   LastPageNumber?: number;
   resultsFound?: number;
   setCurrentPage: Dispatch<SetStateAction<number>>;
@@ -30,72 +33,95 @@ interface Value {
   error: unknown;
 }
 
-const searchContext = createContext<Value>({
-  LastPageNumber: undefined,
-  resultsFound: undefined,
-  currentPage: undefined,
-  category: "character",
-  searchText: "",
-  setCurrentPage: () => {},
-  setSearchText: () => {},
-  handleRadioChange: () => {},
-  clearFilters: () => {},
-  selectedFilters: {},
-  setSelectedFilters: () => {},
-  data: undefined,
-  isLoading: false,
-  error: null,
-});
+const searchContext = createContext<Value | undefined>(undefined);
 
 function SearchProvider({ children }: { children: React.ReactNode }) {
-  const { category }: { category: Category } = useParams();
+  const router = useRouter();
+  const params = useParams();
+
+  // Validate category param
+  const rawCategory = params.category as string | undefined;
+  const allowedCategories: readonly Category[] = [
+    "character",
+    "location",
+    "episode",
+  ];
+  const isValidCategory =
+    rawCategory && allowedCategories.includes(rawCategory as Category);
+  const category: Category = isValidCategory
+    ? (rawCategory as Category)
+    : "character";
+
+  // Redirect if invalid
+  useEffect(() => {
+    if (!isValidCategory) {
+      router.replace("/oops/page-not-found");
+    }
+  }, [isValidCategory, router]);
+
+  // State
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedFilters, setSelectedFilters] = useState<
     Record<string, string>
-  >(
-    filterData[category].reduce(
-      (acc, filter) => {
-        acc[filter.name] = ""; // Default empty selection
-        return acc;
-      },
-      {} as Record<string, string>,
-    ),
-  );
+  >({});
 
-  //Form Filter Query String
-  const filterQueryString = Object.entries(selectedFilters)
-    .filter(([_, value]) => value) // Remove empty selections
-    .map(
-      ([key, value]) =>
-        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
-    )
-    .join("&");
+  // Initialize filters when category changes
+  useEffect(() => {
+    if (isValidCategory) {
+      setSelectedFilters(
+        filterData[category].reduce(
+          (acc, filter) => {
+            acc[filter.name] = "";
+            return acc;
+          },
+          {} as Record<string, string>,
+        ),
+      );
+    }
+  }, [category, isValidCategory]);
 
-  let url = "";
-  if (!searchText && !filterQueryString) url = "" + `?page=${currentPage}`;
-  if (!searchText && filterQueryString)
-    url = `?${filterQueryString}&page=${currentPage}`;
-  if (searchText && !filterQueryString)
-    url = `?name=${searchText}&page=${currentPage}`;
-  if (searchText && filterQueryString)
-    url = `?name=${searchText}&${filterQueryString}&page=${currentPage}`;
+  // Reset page when filters or searchText change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchText, selectedFilters]);
 
-  ////////////////////////
-  // Handle radio button change
+  // Memoize filter query string
+  const filterQueryString = useMemo(() => {
+    return Object.entries(selectedFilters)
+      .filter(([_, value]) => value)
+      .map(
+        ([key, value]) =>
+          `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+      )
+      .join("&");
+  }, [selectedFilters]);
+
+  // Memoize url
+  const url = useMemo(() => {
+    const parts: string[] = [];
+    if (searchText) parts.push(`name=${encodeURIComponent(searchText)}`);
+    if (filterQueryString) parts.push(filterQueryString);
+    parts.push(`page=${currentPage}`);
+    return `?${parts.join("&")}`;
+  }, [searchText, filterQueryString, currentPage]);
+
+  // Query
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["fetchData", url, category],
+    queryFn: () => fetchData(url, category),
+  });
+
+  // Handlers
   function handleRadioChange(filterName: string, value: string) {
-    setSelectedFilters((prev) => ({
-      ...prev,
-      [filterName]: value,
-    }));
+    setSelectedFilters((prev) => ({ ...prev, [filterName]: value }));
   }
 
-  // **Reset filters**
   function clearFilters() {
     setSelectedFilters(
       filterData[category].reduce(
         (acc, filter) => {
-          acc[filter.name] = ""; // Reset all filters to empty
+          acc[filter.name] = "";
           return acc;
         },
         {} as Record<string, string>,
@@ -103,15 +129,11 @@ function SearchProvider({ children }: { children: React.ReactNode }) {
     );
   }
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["fetchData", url, category],
-    queryFn: () => fetchData(url, category),
-  });
-
+  // Derived data
   const resultsFound = data?.info?.count;
   const LastPageNumber = data?.info?.pages;
 
-  const value = {
+  const value: Value = {
     currentPage,
     setCurrentPage,
     LastPageNumber,
@@ -135,8 +157,9 @@ function SearchProvider({ children }: { children: React.ReactNode }) {
 
 function useSearch() {
   const context = useContext(searchContext);
-  if (context === undefined)
-    throw new Error("PostContext was used outside of the PostProvider");
+  if (!context) {
+    throw new Error("useSearch must be used within a SearchProvider");
+  }
   return context;
 }
 

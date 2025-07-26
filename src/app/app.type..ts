@@ -50,3 +50,8 @@ export type PageData = {
 
   results: Character[] | Location[] | Episode[];
 };
+
+export type CharacterModalProps = {
+  data: Character;
+  onClose: () => void;
+};

@@ -21,11 +21,13 @@ const navIconVariants = {
   },
 };
 
-function NavList() {
+function NavList({ onClose }: { onClose?: () => void }) {
   const pathName = usePathname();
+
   return (
     <>
       <motion.li
+        onClick={onClose}
         variants={navIconVariants}
         initial="normal"
         whileHover="hovered"
@@ -40,42 +42,45 @@ function NavList() {
         </Link>
       </motion.li>
       <motion.li
+        onClick={onClose}
         variants={navIconVariants}
         initial="normal"
         whileHover="hovered"
       >
         <Link
           prefetch={false}
-          href={"/Home/character"}
-          className={`flex items-center justify-center gap-1 rounded-full bg-black px-4 py-2 text-base text-white duration-300 hover:bg-white hover:text-black md:px-3 md:py-2 md:text-sm lg:px-4 lg:py-2 lg:text-base ${pathName === "/Home/character" && "bg-white !text-black"}`}
+          href={"/character"}
+          className={`flex items-center justify-center gap-1 rounded-full bg-black px-4 py-2 text-base text-white duration-300 hover:bg-white hover:text-black md:px-3 md:py-2 md:text-sm lg:px-4 lg:py-2 lg:text-base ${pathName === "/character" && "bg-white !text-black"}`}
         >
           <BsFillPersonVcardFill className="size-6 md:size-4 lg:size-6" />
           Characters
         </Link>
       </motion.li>
       <motion.li
+        onClick={onClose}
         variants={navIconVariants}
         initial="normal"
         whileHover="hovered"
       >
         <Link
           prefetch={false}
-          href={"/Home/location"}
-          className={`flex items-center justify-center gap-1 rounded-full bg-black px-4 py-2 text-base text-white duration-300 hover:bg-white hover:text-black md:px-3 md:py-2 md:text-sm lg:px-4 lg:py-2 lg:text-base ${pathName === "/Home/location" && "bg-white !text-black"} `}
+          href={"/location"}
+          className={`flex items-center justify-center gap-1 rounded-full bg-black px-4 py-2 text-base text-white duration-300 hover:bg-white hover:text-black md:px-3 md:py-2 md:text-sm lg:px-4 lg:py-2 lg:text-base ${pathName === "/location" && "bg-white !text-black"} `}
         >
           <IoLocationOutline className="size-6 md:size-4 lg:size-6" />
           Locations
         </Link>
       </motion.li>
       <motion.li
+        onClick={onClose}
         variants={navIconVariants}
         initial="normal"
         whileHover="hovered"
       >
         <Link
           prefetch={false}
-          href={"/Home/episode"}
-          className={`flex items-center justify-center gap-1 rounded-full bg-black px-4 py-2 text-base text-white duration-300 hover:bg-white hover:text-black md:px-3 md:py-2 md:text-sm lg:px-4 lg:py-2 lg:text-base ${pathName === "/Home/episode" && "bg-white !text-black"} `}
+          href={"/episode"}
+          className={`flex items-center justify-center gap-1 rounded-full bg-black px-4 py-2 text-base text-white duration-300 hover:bg-white hover:text-black md:px-3 md:py-2 md:text-sm lg:px-4 lg:py-2 lg:text-base ${pathName === "/episode" && "bg-white !text-black"} `}
         >
           <MdLocalMovies className="size-6 md:size-4 lg:size-6" />
           Episodes
