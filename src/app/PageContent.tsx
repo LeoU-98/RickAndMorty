@@ -4,11 +4,12 @@ import CharactersSkeleton from "./_UI/Skeletons";
 import Card from "./_UI/Card";
 import { useSearch } from "./Context/searchContext";
 import { motion } from "framer-motion";
+import { CustomError } from "./app.type.";
 
 function PageContent() {
   const { data, isLoading, error, category } = useSearch();
 
-  if (error?.status === 404) return <ErrorNotFound />;
+  if ((error as CustomError)?.status === 404) return <ErrorNotFound />;
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-5">
