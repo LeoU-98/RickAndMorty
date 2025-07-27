@@ -55,3 +55,8 @@ export type CharacterModalProps = {
   data: Character;
   onClose: () => void;
 };
+
+export interface CustomError extends Error {
+  status?: number;
+  url?: string;
+}

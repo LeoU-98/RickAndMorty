@@ -1,3 +1,5 @@
+import { CustomError } from "../app.type.";
+
 export async function fetchData(
   queryText: string,
   queryPage: "character" | "location" | "episode",
@@ -8,9 +10,11 @@ export async function fetchData(
     const response = await fetch(url);
 
     if (!response.ok) {
-      const error = new Error(`Request failed with status ${response.status}`);
-      (error as any).status = response.status;
-      (error as any).url = url;
+      const error: CustomError = new Error(
+        `Request failed with status ${response.status}`,
+      );
+      error.status = response.status;
+      error.url = url;
       throw error;
     }
 
